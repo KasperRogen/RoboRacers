@@ -7,10 +7,7 @@ public abstract class Card : ScriptableObject
 {
     public string cardName;
     public Sprite icon;
-
-    [HideInInspector]
-    public bool IsDone = false;
+    
 
     public abstract void Execute(GameObject GO);
-    public abstract void Tick();
 }

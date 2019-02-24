@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardReader : MonoBehaviour
@@ -7,21 +8,17 @@ public class CardReader : MonoBehaviour
     public Card[] cards = new Card[5];
     int index = 0;
 
-    void Start()
+
+    private void Start()
     {
-        cards[0].Execute(gameObject);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerManager>().Players.Add(this);
     }
 
-    private void Update()
+    public void RunCard(int _index)
     {
-
-        cards[index].Tick();
-        
-        if (cards[index].IsDone)
-        {
-            index++;
-            cards[index].Execute(gameObject);
-        }
+        index = _index;
+        cards[index].Execute(gameObject);
     }
+
 
 }

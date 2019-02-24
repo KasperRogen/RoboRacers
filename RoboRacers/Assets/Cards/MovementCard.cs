@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 [CreateAssetMenu(fileName = "New Movement Card", menuName = "Cards/New Movement Card")]
 public class MovementCard : Card
 {
-    [Header("TYPE")]
+    [Header("STUFF")]
     public MovementType movementType;
+    public LayerMask BlocksMovementMask;
     [Space(20)]
 
     [Header("MOVEMENT")]
@@ -17,73 +20,34 @@ public class MovementCard : Card
     [Header("ROTATION")]
     public RotationDirection rotationDirection;
     public int rotationAmount;
-    
 
-    Vector3 currentTarget;
-    GameObject GO;
-
-    public override void Execute(GameObject _GO)
+    public override void Execute(GameObject GO)
     {
-        IsDone = false;
-        GO = _GO;
 
         switch (movementType)
         {
             case MovementType.MOVE:
-                    currentTarget = GO.transform.position + GO.transform.TransformDirection(Vector3.forward) * spaces;
+                GO.GetComponent<BotMovementController>().CalculateNewMove(spaces);
             break;
 
             case MovementType.ROTATE:
                 switch (rotationDirection)
                 {
                     case RotationDirection.LEFT:
-                        currentTarget = GO.transform.TransformDirection(Vector3.forward);
-                        currentTarget = Quaternion.AngleAxis(-rotationAmount, Vector3.up) * currentTarget;
+                        GO.GetComponent<BotMovementController>().CalculateNewRotation(-rotationAmount);
                         break;
 
                     case RotationDirection.RIGHT:
-                        currentTarget = GO.transform.TransformDirection(Vector3.forward);
-                        currentTarget = Quaternion.AngleAxis(rotationAmount, Vector3.up) * currentTarget;
+                        GO.GetComponent<BotMovementController>().CalculateNewRotation(+rotationAmount);
                         break;
                 }
-                
-            break;
-        }
-    }
 
-    
-
-    public override void Tick()
-    {
-
-        
-        switch (movementType)
-        {
-
-            case MovementType.MOVE:
-
-                GO.transform.position = Vector3.MoveTowards(GO.transform.position, currentTarget, 0.01f);
-                
-                if (GO.transform.position == currentTarget)
-                {
-                    IsDone = true;
-                }
-
-            break;
-
-            case MovementType.ROTATE:
-                Vector3 newDir = Vector3.RotateTowards(GO.transform.TransformDirection(Vector3.forward), currentTarget, 0.01f, 0.1f);
-                GO.transform.rotation = Quaternion.LookRotation(newDir);
-                
-                if (Vector3.Angle(GO.transform.TransformDirection(Vector3.forward), currentTarget) == 0)
-                {
-                    IsDone = true;
-                }
-
-            break;
+                break;
         }
     }
 }
+
+
 
 
 public enum RotationDirection
