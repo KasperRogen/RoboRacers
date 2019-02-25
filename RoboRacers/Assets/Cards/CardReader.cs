@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using BeardedManStudios.Forge.Networking.Unity;
 
 public class CardReader : MonoBehaviour
 {
@@ -9,22 +10,13 @@ public class CardReader : MonoBehaviour
     public Card[] cards = new Card[5];
     public CardCollection Program;
     int index = 0;
+    PlayerScript player;
 
     private void Start()
     {
+        player = GetComponent<PlayerScript>();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerManager>().Players.Add(this);
         Program = GameObject.FindGameObjectWithTag("ProgramPanel").GetComponent<CardCollection>();
-        Program.OnCardChangedCallback += UpdateCards;
-    }
-
-    public void UpdateCards()
-    {
-
-        for (int i = 0; i < Program.Cards.Count; i++)
-        {
-            cards[i] = Program.Cards[i];
-        }
-        
     }
 
     public void RunCard(int _index)
