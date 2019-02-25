@@ -7,6 +7,7 @@ public abstract class Card : ScriptableObject
 {
     public string cardName;
     public Sprite icon;
+    public string ID;
     
 
     public abstract void Execute(GameObject GO);

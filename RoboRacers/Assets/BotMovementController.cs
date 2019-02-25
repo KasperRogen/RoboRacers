@@ -65,7 +65,6 @@ public class BotMovementController : MonoBehaviour
             yield return new WaitForEndOfFrame();
             Vector3 newDir = Vector3.RotateTowards(transform.TransformDirection(Vector3.forward), targetRotation, 1 * Time.deltaTime, 0.1f);
             transform.rotation = Quaternion.LookRotation(newDir);
-            Debug.Log(Vector3.Angle(transform.TransformDirection(Vector3.forward), targetRotation));
         }
         yield return new WaitForSeconds(1);
         IsDone = true;

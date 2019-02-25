@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Move Forward 2
   icon: {fileID: 0}
-  IsDone: 1
+  ID: MOVE_FORWARD_2
   movementType: 0
+  BlocksMovementMask:
+    serializedVersion: 2
+    m_Bits: 0
   spaces: 2
   rotationDirection: 0
   rotationAmount: 0

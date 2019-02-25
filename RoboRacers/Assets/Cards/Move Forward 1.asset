@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40685c2ecfb6874baf8479637ab146e, type: 3}
   m_Name: Move Forward 1
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: Move Forward 1
   icon: {fileID: 0}
-  IsDone: 1
+  ID: MOVE_FORWARD_1
   movementType: 0
-  spaces: 1
-  rotationDirection: 0
-  rotationAmount: 0
   BlocksMovementMask:
     serializedVersion: 2
     m_Bits: 0
+  spaces: 1
+  rotationDirection: 0
+  rotationAmount: 0

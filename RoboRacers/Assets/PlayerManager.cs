@@ -12,15 +12,25 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Players.ForEach(x => x.RunCard(cardIndex));
-        cardIndex += 1;
+        
     }
+
+
+    private void OnGUI()
+    {
+        if(GUI.Button(new Rect(10, 10, 50, 50), "Start"))
+        {
+            Players.ForEach(x => x.RunCard(cardIndex));
+            cardIndex += 1;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
     {
 
-        if(botControllers.TrueForAll(x => x.IsDone))
+        if(botControllers.Count > 0 && botControllers.TrueForAll(x => x.IsDone))
         {
             if(cardIndex >= 5)
             {

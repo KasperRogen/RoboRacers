@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Rotate Left
   icon: {fileID: 0}
-  IsDone: 0
+  ID: ROTATE_LEFT
   movementType: 1
+  BlocksMovementMask:
+    serializedVersion: 2
+    m_Bits: 0
   spaces: 0
   rotationDirection: 0
   rotationAmount: 90
