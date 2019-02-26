@@ -7,9 +7,11 @@ using BeardedManStudios.Forge.Networking;
 public class PlayerScript : PlayerCardsBehavior
 {
     public List<Card> cards;
-    CardReader cardReader;
 
     public List<Card> allCards;
+    public GameObject botPrefab;
+    public GameObject bot;
+    CardCollection Program;
 
     public override void UploadCards(RpcArgs args)
     {
@@ -21,11 +23,23 @@ public class PlayerScript : PlayerCardsBehavior
         }
     }
 
+
+
+    public void RunCard(int _index)
+    {
+        cards[_index].Execute(bot);
+    }
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        cardReader = GetComponent<CardReader>();
-        cardReader.Program.OnCardChangedCallback += UpdateCards;
+        Program = GameObject.FindGameObjectWithTag("ProgramPanel").GetComponent<CardCollection>();
+        Program.OnCardChangedCallback += UpdateCards;
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerManager>().Players.Add(this);
+        bot = Instantiate(botPrefab, transform.position, Quaternion.identity);
     }
 
 
@@ -36,26 +50,17 @@ public class PlayerScript : PlayerCardsBehavior
             return;
         }
 
-        for (int i = 0; i < cardReader.Program.Cards.Count; i++)
+        for (int i = 0; i < Program.Cards.Count; i++)
         {
-            cards[i] = cardReader.Program.Cards[i];
+            cards[i] = Program.Cards[i];
         }
+
+
+        List<string> Ids = cards.Where(x => x != null).Select(x => x.ID).ToList();
+        networkObject.SendRpc(RPC_UPLOAD_CARDS, Receivers.Server, string.Join(",", Ids));
+
 
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (networkObject.IsOwner == false)
-        {
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && networkObject.IsOwner)
-        {
-            List<string> Ids = cards.Where(x => x != null).Select(x => x.ID).ToList();
-            networkObject.SendRpc(RPC_UPLOAD_CARDS, Receivers.Server, string.Join(",", Ids));
-        }
-    }
 }

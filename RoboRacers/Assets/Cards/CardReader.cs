@@ -14,19 +14,7 @@ public class CardReader : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<PlayerScript>();
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerManager>().Players.Add(this);
-        Program = GameObject.FindGameObjectWithTag("ProgramPanel").GetComponent<CardCollection>();
     }
-
-    public void RunCard(int _index)
-    {
-
-        index = _index;
-        cards[index].Execute(gameObject);
-
-    }
-
 
 
 }

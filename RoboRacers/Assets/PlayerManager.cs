@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    public List<CardReader> Players;
+    public List<PlayerScript> Players;
     public List<BotMovementController> botControllers;
     int cardIndex = 0;
 
