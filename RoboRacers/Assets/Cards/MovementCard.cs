@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 
 [CreateAssetMenu(fileName = "New Movement Card", menuName = "Cards/New Movement Card")]
+[System.Serializable]
 public class MovementCard : Card
 {
     [Header("STUFF")]

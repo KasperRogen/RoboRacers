@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCardsNetworkObject:
-  - {fileID: 7321322959909754295, guid: bd53076b84d826d438fcb8a1908965be, type: 3}
+  - {fileID: 11, guid: bd53076b84d826d438fcb8a1908965be, type: 3}
   automaticScenes: 1
