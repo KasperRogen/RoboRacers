@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking;
+using BeardedManStudios.Forge.Networking.Unity;
 
 public class PlayerScript : PlayerCardsBehavior
 {
@@ -36,8 +37,11 @@ public class PlayerScript : PlayerCardsBehavior
     // Start is called before the first frame update
     void Start()
     {
-        Program = GameObject.FindGameObjectWithTag("ProgramPanel").GetComponent<CardCollection>();
-        Program.OnCardChangedCallback += UpdateCards;
+        if(NetworkManager.Instance.IsServer == false) { 
+            Program = GameObject.FindGameObjectWithTag("ProgramPanel").GetComponent<CardCollection>();
+            Program.OnCardChangedCallback += UpdateCards;
+        }
+
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerManager>().Players.Add(this);
         bot = Instantiate(botPrefab, transform.position, Quaternion.identity);
     }
