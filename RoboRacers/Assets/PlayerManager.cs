@@ -11,11 +11,6 @@ public class PlayerManager : MonoBehaviour
     public GamePhase phase;
     int cardIndex = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
 
     private void OnGUI()
@@ -54,7 +49,7 @@ public class PlayerManager : MonoBehaviour
                 cardIndex = 0;
                 phase = GamePhase.PLANNING;
                 Players.ForEach(x => x.UpdateGamePhase(phase));
-                Players.ForEach(x => x.DownloadCards(GenerateCards()));
+                Players.ForEach(x => x.StartPlanningPhase(GenerateCards(), 30));
             } else
             {
                 Players.ForEach(x => x.RunCard(cardIndex));

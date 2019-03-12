@@ -4,6 +4,7 @@ using System.Linq;
 using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Unity;
+using TMPro;
 
 public class PlayerScript : PlayerCardsBehavior
 {
@@ -14,6 +15,7 @@ public class PlayerScript : PlayerCardsBehavior
     public GameObject bot;
     CardCollection Program;
     CardCollection CardSelection;
+    
 
     public override void UploadCards(RpcArgs args)
     {
@@ -31,8 +33,6 @@ public class PlayerScript : PlayerCardsBehavior
     {
         cards[_index].Execute(bot);
     }
-
-
 
 
     // Start is called before the first frame update
@@ -76,9 +76,9 @@ public class PlayerScript : PlayerCardsBehavior
         networkObject.SendRpc(RPC_SET_GAME_PHASE, Receivers.Owner, (int)phase );
     }
 
-    public void DownloadCards(string cardIds)
+    public void StartPlanningPhase(string cardIds, int _timeleft)
     {
-        networkObject.SendRpc(RPC_DOWNLOAD_CARDS, Receivers.Owner, cardIds);
+        networkObject.SendRpc(RPC_START_PLANNING_PHASE, Receivers.Owner, cardIds, _timeleft);
     }
 
 
@@ -90,9 +90,13 @@ public class PlayerScript : PlayerCardsBehavior
 
 
 
-    public override void DownloadCards(RpcArgs args)
+    public override void StartPlanningPhase(RpcArgs args)
     {
+        phase = GamePhase.PLANNING;
+
         List<string> Ids = args.GetNext<string>().Split(',').ToList();
+        
+        TimerController.instance.StartTimer(args.GetNext<int>());
 
         if (networkObject.IsServer == false)
         {
